@@ -1,0 +1,43 @@
+{
+"Name" : "Notepad++",
+"Path" : "C:\\git\\SCCMIntuneAppMigration\\Data\\Notepad++\\Installer",
+"Filename" : "npp.8.9.7.Installer.x64.exe",
+"Owner" : "Notepad++",
+    "Logo" : "C:\\git\\SCCMIntuneAppMigration\\Data\\Notepad++\\logo.svg",
+"Description" : "Notepad++ is a free source code editor and Notepad replacement that supports several languages",
+"InstallCommand" : "npp.8.9.7.Installer.x64.exe /S",
+"Uninstallcommand" : "npp.8.9.7.Installer.x64.exe /U",
+    "Detectionrules" : [
+        {
+            "ruletype" : "MSI",
+            "productcode" : "{12345678-1234-1234-1234-1234567890AB}",
+            "Operator" : "Equals",
+            "Value" : "8.9.7"
+
+        },
+        {
+            "ruletype" : "File",
+            "path" : "C:\\Program Files\\Notepad++",
+            "filename" : "notepad++.exe",
+            "Detectionmethod" : "VersionComparison",
+            "Operator" : "Equals",
+            "Value" : "8.9.7"
+        },
+        {
+            "ruletype" : "Registry",
+            "keyPath" : "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++",
+            "valueName" : "DisplayVersion",
+            "Detectionmethod" : "VersionComparison",
+
+            "Operator" : "Equals",
+            "Value" : "8.9.7"
+        }
+    ],
+    "Exitcodes" : {
+        "0" : "Success",
+        "1707" : "Success",
+        "3010" : "SuccessRebootInitiated",
+        "1641" : "SuccessRebootRequired",
+        "1618" : "Retry"
+    }
+ }
