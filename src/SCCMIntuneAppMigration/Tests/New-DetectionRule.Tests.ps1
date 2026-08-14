@@ -37,6 +37,14 @@ Describe 'New-DetectionRule' {
             $rule.'@odata.type' | Should -Be '#microsoft.graph.win32LobAppProductCodeDetection'
         }
 
+        It 'routes Script rule creation to script helper' {
+            $rule = New-DetectionRule -RuleType Script -Parameters @{
+                ScriptContent = "Write-Output 'Detected'"
+            }
+
+            $rule.'@odata.type' | Should -Be '#microsoft.graph.win32LobAppPowerShellScriptDetection'
+        }
+
         It 'wraps forwarded helper errors in dispatcher context' {
             { New-DetectionRule -RuleType Msi -Parameters @{ ProductCode = 'bad-guid'; ProductCodeExists = $true } } |
                 Should -Throw "Failed to build 'Msi' detection rule by 'New-MsiDetectionRule'. Error:*"

@@ -34,14 +34,8 @@ function Send-Win32ContentToAzureBlob {
             $blockId = [Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes($rawBlockId))
             $blockIds.Add($blockId)
 
-            $payload = if ($bytesRead -eq $buffer.Length) {
-                $buffer
-            }
-            else {
-                $chunk = New-Object byte[] $bytesRead
-                [Array]::Copy($buffer, 0, $chunk, 0, $bytesRead)
-                $chunk
-            }
+            $payload = New-Object byte[] $bytesRead
+            [Array]::Copy($buffer, 0, $payload, 0, $bytesRead)
 
             $blockUri = "$AzureStorageUri&comp=block&blockid=$([uri]::EscapeDataString($blockId))"
             Invoke-WebRequest -Method Put -Uri $blockUri -Body $payload -UseBasicParsing | Out-Null

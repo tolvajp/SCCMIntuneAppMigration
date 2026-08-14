@@ -1,4 +1,4 @@
-function New-DetectionRule {
+function New-IntuneDetectionRule {
     <#
     .SYNOPSIS
     Dispatches detection rule creation to the appropriate helper.
@@ -8,6 +8,7 @@ function New-DetectionRule {
     - New-FileDetectionRule
     - New-RegistryDetectionRule
     - New-MsiDetectionRule
+    - New-ScriptDetectionRule
 
     Parameters for the selected helper are passed via the Parameters hashtable.
     The function is fail-fast and throws if RuleType is unsupported, the target helper is missing,
@@ -38,7 +39,7 @@ function New-DetectionRule {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [ValidateSet('File', 'Registry', 'Msi')]
+        [ValidateSet('File', 'Registry', 'Msi', 'Script')]
         [string]$RuleType,
 
         [Parameter(Mandatory)]
@@ -50,6 +51,7 @@ function New-DetectionRule {
         'File' { 'New-FileDetectionRule' }
         'Registry' { 'New-RegistryDetectionRule' }
         'Msi' { 'New-MsiDetectionRule' }
+        'Script' { 'New-ScriptDetectionRule' }
         default { throw "Unsupported RuleType '$RuleType'." }
     }
 

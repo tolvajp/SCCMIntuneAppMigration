@@ -8,7 +8,7 @@ function Assert-GraphSessionForWin32App {
 
     $context = Get-MgContext
     if (-not $context) {
-        throw 'No active Microsoft Graph session found. Connect first with required scopes.'
+        throw "No active Microsoft Graph session found. Connect first with: Connect-MgGraph -Scopes 'DeviceManagementApps.ReadWrite.All','DeviceManagementConfiguration.ReadWrite.All'"
     }
 
     $requiredScopes = @(

@@ -27,6 +27,11 @@ function Invoke-IntuneGraphRequest {
         return Invoke-MgGraphRequest -Method $Method -Uri $Uri
     }
     catch {
-        throw "Graph request failed. Method=$Method Uri=$Uri Error=$($_.Exception.Message)"
+        $errorDetail = $_.ErrorDetails.Message
+        if ([string]::IsNullOrWhiteSpace($errorDetail)) {
+            $errorDetail = $_.Exception.Message
+        }
+
+        throw "Graph request failed. Method=$Method Uri=$Uri Error=$errorDetail"
     }
 }

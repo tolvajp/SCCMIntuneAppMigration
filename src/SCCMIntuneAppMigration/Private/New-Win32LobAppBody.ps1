@@ -27,6 +27,10 @@ function New-Win32LobAppBody {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
+        [string]$SetupFilePath,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
         [hashtable[]]$DetectionRules,
 
         [Parameter()]
@@ -76,8 +80,12 @@ function New-Win32LobAppBody {
         publisher = $Publisher
         installCommandLine = $InstallCommandLine
         uninstallCommandLine = $UninstallCommandLine
+        setupFilePath = $SetupFilePath
+        fileName = $SetupFilePath
         applicableArchitectures = $ApplicableArchitecture
-        minimumSupportedWindowsRelease = $MinimumSupportedWindowsRelease
+        minimumSupportedOperatingSystem = @{
+            v10_1607 = $true
+        }
         informationUrl = $InformationUrl
         privacyInformationUrl = $PrivacyInformationUrl
         developer = $Developer
@@ -100,6 +108,10 @@ function New-Win32LobAppBody {
 
     if ($LargeIcon) {
         $body.largeIcon = $LargeIcon
+    }
+
+    if ($MinimumSupportedWindowsRelease -ne 'Windows10_1607') {
+        $body.minimumSupportedWindowsRelease = $MinimumSupportedWindowsRelease
     }
 
     return $body

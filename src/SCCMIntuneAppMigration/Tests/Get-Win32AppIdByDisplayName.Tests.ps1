@@ -20,6 +20,16 @@ Describe 'Get-Win32AppIdByDisplayName' {
             $id | Should -Be 'app-1'
         }
 
+        It 'URL-encodes special characters in the display name filter' {
+            Mock -CommandName Invoke-IntuneGraphRequest -MockWith {
+                param($Method, $Uri)
+                $Uri | Should -Be "https://graph.microsoft.com/beta/deviceAppManagement/mobileApps?`$filter=displayName%20eq%20%27Notepad%2B%2B%20Bob%27%27s%27"
+                @{ value = @(@{ '@odata.type' = '#microsoft.graph.win32LobApp'; id = 'app-1' }) }
+            }
+
+            Get-Win32AppIdByDisplayName -DisplayName "Notepad++ Bob's" | Should -Be 'app-1'
+        }
+
         It 'throws when no win32 app is found' {
             Mock -CommandName Invoke-IntuneGraphRequest -MockWith { @{ value = @() } }
             { Get-Win32AppIdByDisplayName -DisplayName 'Missing App' } | Should -Throw '*No Win32 app found*'

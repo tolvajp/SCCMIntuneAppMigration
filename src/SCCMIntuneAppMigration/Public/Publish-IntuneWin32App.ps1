@@ -160,7 +160,7 @@ function Publish-IntuneWin32App {
     try {
         $metadata = Get-IntuneWinPackageMetadata -IntuneWinFilePath $package.FullName
 
-        $appBody = New-Win32LobAppBody -DisplayName $DisplayName -Description $Description -Publisher $Publisher -InstallCommandLine $InstallCommandLine -UninstallCommandLine $UninstallCommandLine -DetectionRules $DetectionRules -RequirementRules $RequirementRules -ApplicableArchitecture $ApplicableArchitecture -MinimumSupportedWindowsRelease $MinimumSupportedWindowsRelease -InformationUrl $InformationUrl -PrivacyInformationUrl $PrivacyInformationUrl -Developer $Developer -Owner $Owner -Notes $Notes -LargeIcon $LargeIcon
+        $appBody = New-Win32LobAppBody -DisplayName $DisplayName -Description $Description -Publisher $Publisher -InstallCommandLine $InstallCommandLine -UninstallCommandLine $UninstallCommandLine -SetupFilePath $SetupFileName -DetectionRules $DetectionRules -RequirementRules $RequirementRules -ApplicableArchitecture $ApplicableArchitecture -MinimumSupportedWindowsRelease $MinimumSupportedWindowsRelease -InformationUrl $InformationUrl -PrivacyInformationUrl $PrivacyInformationUrl -Developer $Developer -Owner $Owner -Notes $Notes -LargeIcon $LargeIcon
         $app = New-Win32LobApp -Body $appBody
 
         $contentVersion = New-Win32ContentVersion -AppId $app.id

@@ -16,7 +16,8 @@ function Get-Win32AppIdByDisplayName {
     )
 
     $escapedDisplayName = $DisplayName.Replace("'", "''")
-    $uri = "https://graph.microsoft.com/beta/deviceAppManagement/mobileApps?`$filter=displayName eq '$escapedDisplayName'"
+    $encodedFilter = [Uri]::EscapeDataString("displayName eq '$escapedDisplayName'")
+    $uri = "https://graph.microsoft.com/beta/deviceAppManagement/mobileApps?`$filter=$encodedFilter"
     $result = Invoke-IntuneGraphRequest -Method GET -Uri $uri
 
     $matches = @($result.value | Where-Object { $_.'@odata.type' -eq '#microsoft.graph.win32LobApp' })

@@ -32,7 +32,7 @@ Describe 'Invoke-IntuneGraphRequest' {
         It 'throws wrapped message when Graph call fails' {
             Mock -CommandName Invoke-MgGraphRequest -MockWith { throw 'boom' }
 
-            { Invoke-IntuneGraphRequest -Method POST -Uri 'https://graph.microsoft.com/beta/test' -Body @{ a = 1 } } | Should -Throw 'Graph request failed*'
+            { Invoke-IntuneGraphRequest -Method POST -Uri 'https://graph.microsoft.com/beta/test' -Body @{ a = 1 } } | Should -Throw '*Error=boom*'
         }
     }
 }
